@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Perhitungan</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<style>
+        /* CSS untuk body */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('https://i.ibb.co/8bxLKx0/20240313-035450-0000.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        
+        /* CSS untuk container */
+        .container {
+            width: 300px;
+            text-align: center;
+            background-color: #ffc;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: #333;
+        }
+        
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        label {
+            width: 100%;
+            text-align: left;
+            margin-bottom: 5px;
+        }
+        
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #F1C01F;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 10px; /* Menambahkan margin bawah */
+        }
+
+        /* Popup */
+        .popup {
+            display: none;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        .popup-content {
+            background-color: #fefefe;
+            margin: 20% auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            position: relative;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .popup-content img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            margin-top: 20px;
+        }
+
+        /* Popup gambar */
+        #popupImage {
+            z-index: 1000;
+        }
+    </style>
+<body>
+     <div class="container">
+    <h2>Kalkulator Perhitungan</h2>
+    <form id="calculatorForm">
+        <label for="inputP">Masukkan panjang (meter):</label>
+        <input type="number" id="inputP" name="inputP" required>
+        <br>
+        <label for="inputL">Masukkan lebar (meter):</label>
+        <input type="number" id="inputL" name="inputL" required>
+        <br>
+        <label for="inputTinggiTiang">Masukkan tinggi tiang (meter):</label>
+        <input type="number" id="inputTinggiTiang" name="inputTinggiTiang" required>
+        <br>
+        <label for="jumlahTiang">Jumlah Tiang:</label>
+        <input type="number" id="jumlahTiang" name="jumlahTiang" required>
+        <br>
+        <!-- Tombol-tombol dikelompokkan dalam kontainer -->
+     
+            <button type="button" onclick="calculate()">Hitung</button>
+            <button type="button" onclick="showDesign()">Desain</button>
+            <button type="button" onclick="checkPrice()">Cek Harga</button>
+      
+    </form>
+     </div>
+    <!-- Popup -->
+    <div class="popup" id="popupImage">
+        <div class="popup-content">
+            <span class="close" onclick="closePopupImage()">&times;</span>
+            <img id="popupImg" src="" alt="Gambar">
+        </div>
+    </div>
+
+    <!-- Popup Hasil -->
+    <div class="popup" id="popupResult">
+        <div class="popup-content">
+            <span class="close" onclick="closePopupResult()">&times;</span>
+            <div id="result"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+      function calculate() {
+    var P = parseFloat(document.getElementById('inputP').value);
+    var L = parseFloat(document.getElementById('inputL').value);
+    var tinggiTiang = parseFloat(document.getElementById('inputTinggiTiang').value);
+    var jumlahTiang = parseFloat(document.getElementById('jumlahTiang').value);
+     
+     
+       // Periksa apakah semua input telah diisi
+       if (!P || !L || !tinggiTiang || !jumlahTiang) {
+         // Jika ada input yang kosong, tampilkan pesan peringatan
+         alert("Harap isi semua input sebelum melakukan perhitungan.");
+         return; // Jangan lanjutkan perhitungan jika ada input yang kosong
+       }
+
+
+    var luasLantai = (P + 1) * L;
+    var panjangDinding = (L + 1) * P;
+    var hasilTiang = (tinggiTiang * 2) * jumlahTiang;
+    var total = luasLantai + panjangDinding + hasilTiang;
+
+    var totalBajaringan = Math.ceil(total / 6);
+    var galvalum = Math.ceil(P / 0.75);
+    var bautSBR = ((P + 1) * (L + 1) * 4) + (jumlahTiang * 8);
+    var roofing = (((P * 2)+ 1) * ( L + 1 ) * 2) + (jumlahTiang * 4);
+    var dynabolt = galvalum + (jumlahTiang * 4);
+
+      var resultHTML =
+    "<p id='labelBajaringan'>Kebutuhan Bajaringan = " + totalBajaringan + " batang <button onclick='showImage(\"https://i.ibb.co/HrVdqrX/21-53-49-images.jpg\")'>Gambar</button></p>" +
+    "<p id='galvalum'>Kebutuhan Galvalum = " + galvalum + " lembar ( P" + Math.ceil(L) + "m Panjang menyesuaikan) <button onclick='showImage(\"https://i.ibb.co/S3zNP94/images-1.jpg\")'>Gambar</button></p>" +
+    "<p id='bautSBR'>Kebutuhan Baut SBR 10x19 = " + bautSBR + " biji <button onclick='showImage(\"https://i.ibb.co/xF1t5pr/21-54-44-images.jpg\")'>Gambar</button></p>" +
+    "<p id='roofing'>Kebutuhan Baut Roofing (5cm) = " + roofing + " biji <button onclick='showImage(\"https://i.ibb.co/sFyHygG/21-55-13-images.jpg\")'>Gambar</button></p>" +
+    "<p id='dynabolt'>Kebutuhan Dynabolt 10x50 = " + dynabolt + " biji <button onclick='showImage(\"https://i.ibb.co/P6zC1T7/2024-04-24-21-55-42-2846556793032350212.jpg\")'>Gambar</button></p>";
+
+  document.getElementById('result').innerHTML = resultHTML;
+  showPopup(); // Menampilkan popup
+  }
+  
+  function showImage(imageUrl) {
+    var imgTag = "<img src='" + imageUrl + "' alt='Gambar'>";
+    alert("Gambar akan ditampilkan di sini:\n" + imageUrl);
+    // Jika Anda ingin menampilkan gambar di dalam popup, gunakan kode berikut
+    // document.getElementById('result').insertAdjacentHTML('beforeend', imgTag);
+  }
+  
+  function showPopup() {
+    document.getElementById('popupResult').style.display = 'block';
+  }
+  
+  function closePopup() {
+    document.getElementById('popupResult').style.display = 'none';
+  }
+
+function showDesign() {
+  var P = parseFloat(document.getElementById('inputP').value);
+  var L = parseFloat(document.getElementById('inputL').value);
+  var tinggiTiang = parseFloat(document.getElementById('inputTinggiTiang').value);
+  var jumlahTiang = parseFloat(document.getElementById('jumlahTiang').value);
+
+  // Periksa apakah semua input telah diisi
+  if (!P || !L || !tinggiTiang || !jumlahTiang) {
+    // Jika ada input yang kosong, tampilkan pesan peringatan
+    alert("Harap isi semua input sebelum melihat desain.");
+    return; // Jangan lanjutkan tampilkan desain jika ada input yang kosong
+  }
+
+  var designUrl = "https://i.ibb.co/q5KJvWz/Screenshot-20240425-124729-3-D-Modeling-App.png";
+  showImage(designUrl);
+}
+function checkPrice() {
+  var P = parseFloat(document.getElementById('inputP').value);
+  var L = parseFloat(document.getElementById('inputL').value);
+  var tinggiTiang = parseFloat(document.getElementById('inputTinggiTiang').value);
+  var jumlahTiang = parseFloat(document.getElementById('jumlahTiang').value);
+
+  // Periksa apakah semua input telah diisi
+  if (!P || !L || !tinggiTiang || !jumlahTiang) {
+    // Jika ada input yang kosong, tampilkan pesan peringatan
+    alert("Harap isi semua input sebelum melakukan perhitungan.");
+    return; // Jangan lanjutkan perhitungan jika ada input yang kosong
+  }
+
+  var luasLantai = (P + 1) * L;
+  var panjangDinding = (L + 1) * P;
+  var hasilTiang = (tinggiTiang * 2) * jumlahTiang;
+  var total = luasLantai + panjangDinding + hasilTiang;
+
+  var totalBajaringan = Math.ceil(total / 6);
+  var galvalum = Math.ceil(P / 0.75);
+  var bautSBR = ((P + 1) * (L + 1) * 4) + (jumlahTiang * 8);
+  var roofing = (galvalum * (L + 1) * 2) + (jumlahTiang * 4);
+  var dynabolt = galvalum + (jumlahTiang * 4);
+
+  var hargabajaringan = totalBajaringan * 100000;
+  var hargagalvalum = (P * L) * 30000;
+  var hargasbr = bautSBR * 250;
+  var hargaroofing = roofing * 300;
+  var hargadynabolt = dynabolt * 1500;
+  var jasa = 500000;
+
+  // Hitung total harga
+  var totalHarga = hargabajaringan + hargagalvalum + hargasbr + hargaroofing + hargadynabolt + jasa;
+
+  // Tampilkan hasil harga
+  var resultHTML =
+    "<p>Harga Dapat Berubah Sewaktu Waktu dan Belum Termasuk ongkos kirim</p>" +
+    "<hr>" +
+    "<p>Total Harga Termasuk Jasa Pasang: Rp " + totalHarga.toLocaleString() + "</p>" +
+    "<button onclick='redirectToForm()'>Hubungi Kami</button>"; // Tombol Hubungi Kami
+
+  // Tampilkan hasil harga dalam popup
+  document.getElementById('result').innerHTML = resultHTML;
+  showPopupResult(); // Menampilkan popup hasil perhitungan
+}
+function showImage(imageUrl) {
+    var popupImg = document.getElementById('popupImg');
+    popupImg.src = imageUrl;
+    showPopupImage(); // Menampilkan popup gambar
+}
+
+function showPopupImage() {
+    document.getElementById('popupImage').style.display = 'block';
+}
+
+function closePopupImage() {
+    document.getElementById('popupImage').style.display = 'none';
+}
+
+function showPopupResult() {
+    document.getElementById('popupResult').style.display = 'block';
+}
+
+function closePopupResult() {
+    document.getElementById('popupResult').style.display = 'none';
+}
+
+function redirectToForm() {
+  window.location.href = "formulir.html";
+}
+    </script>
+</body>
+</html>

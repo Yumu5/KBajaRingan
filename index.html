@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animasi dan Pengalihan</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<style>
+
+
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw; /* lebar viewport */
+  height: 100vh; /* tinggi viewport */
+}
+
+.loader img {
+  border: 16px solid #f3f3f3;
+  border-top: 16px solid #3498db;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>
+<body>
+  <div class="loader">
+    <!-- Ganti URL gambar di bawah dengan URL gambar Anda -->
+    <img src="https://i.ibb.co/Pr7jVnF/1700296749813.png" width="30" height="120">
+  </div>
+  <script src="script.js"></script>
+  <script>
+    // Menunggu 3 detik sebelum mengalihkan ke halaman perhitungan.html
+    setTimeout(function() {
+      window.location.href = 'perhitungan.html';
+    }, 4000);
+  </script>
+</body>
+</html>
