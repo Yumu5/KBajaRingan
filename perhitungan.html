@@ -129,6 +129,7 @@
             <button type="button" onclick="calculate()">Hitung</button>
             <button type="button" onclick="showDesign()">Desain</button>
             <button type="button" onclick="checkPrice()">Cek Harga</button>
+             <button onclick="exitApp()">Keluar</button>
       
     </form>
      </div>
@@ -287,6 +288,10 @@ function closePopupResult() {
 
 function redirectToForm() {
   window.location.href = "formulir.html";
+}
+
+function exitApp() {
+  window.close(); // Menutup aplikasi
 }
     </script>
 </body>
