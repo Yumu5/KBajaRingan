@@ -174,7 +174,7 @@
     var totalBajaringan = Math.ceil(total / 6);
     var galvalum = Math.ceil(P / 0.75);
     var bautSBR = ((P + 1) * (L + 1) * 4) + (jumlahTiang * 8);
-    var roofing = (((P * 2)+ 1) * ( L + 1 ) * 2) + (jumlahTiang * 4);
+    var roofing = ((P * 2)+ 1) * ( L + 1 ) + (jumlahTiang * 4);
     var dynabolt = galvalum + (jumlahTiang * 4);
 
       var resultHTML =
@@ -232,24 +232,23 @@ function checkPrice() {
     return; // Jangan lanjutkan perhitungan jika ada input yang kosong
   }
 
-  var luasLantai = (P + 1) * L;
-  var panjangDinding = (L + 1) * P;
-  var hasilTiang = (tinggiTiang * 2) * jumlahTiang;
-  var total = luasLantai + panjangDinding + hasilTiang;
-
-  var totalBajaringan = Math.ceil(total / 6);
-  var galvalum = Math.ceil(P / 0.75);
-  var bautSBR = ((P + 1) * (L + 1) * 4) + (jumlahTiang * 8);
-  var roofing = (galvalum * (L + 1) * 2) + (jumlahTiang * 4);
-  var dynabolt = galvalum + (jumlahTiang * 4);
+   var luasLantai = (P + 1) * L;
+   var panjangDinding = (L + 1) * P;
+   var hasilTiang = (tinggiTiang * 2) * jumlahTiang;
+   var total = luasLantai + panjangDinding + hasilTiang;
+  
+   var totalBajaringan = Math.ceil(total / 6);
+   var galvalum = Math.ceil(P / 0.75);
+   var bautSBR = ((P + 1) * (L + 1) * 4) + (jumlahTiang * 8);
+   var roofing = ((P * 2) + 1) * (L + 1) + (jumlahTiang * 4);
+   var dynabolt = galvalum + (jumlahTiang * 4);
 
   var hargabajaringan = totalBajaringan * 100000;
-  var hargagalvalum = (P * L) * 30000;
+  var hargagalvalum = (galvalum * L) * 30000;
   var hargasbr = bautSBR * 250;
   var hargaroofing = roofing * 300;
   var hargadynabolt = dynabolt * 1500;
-  var jasa = (((P * L ) * 11500) + (( P * L ) * 6500)) + 200000;
-
+  var jasa = ((P * L ) * 11500) + (( P * L ) * 6500) + 200000;
 
   // Hitung total harga
   var totalHarga = hargabajaringan + hargagalvalum + hargasbr + hargaroofing + hargadynabolt + jasa;
@@ -258,7 +257,7 @@ function checkPrice() {
   var resultHTML =
     "<p>Harga Dapat Berubah Sewaktu Waktu dan Belum Termasuk ongkos kirim</p>" +
     "<hr>" +
-    "<p>Total Harga Termasuk Jasa Pasang: Rp " + totalHarga.toLocaleString() + "</p>" +
+    "<p>Total Harga Termasuk Jasa Pasang: Rp " + totalHarga.toLocaleString() + "</p>" + "<hr>" + "<p> Desain Yang Digunakan Desain Yang Umum dan Standart Seperti Pada Tombol Desain </p>"
     "<button onclick='redirectToForm()'>Hubungi Kami</button>"; // Tombol Hubungi Kami
 
   // Tampilkan hasil harga dalam popup
