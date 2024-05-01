@@ -118,11 +118,13 @@
         <label for="inputL">Masukkan lebar (meter):</label>
         <input type="number" id="inputL" name="inputL" required>
         <br>
-        <label for="inputTinggiTiang">Masukkan tinggi tiang (meter):</label>
-        <input type="number" id="inputTinggiTiang" name="inputTinggiTiang" required>
+       <label for="inputTinggiTiang">Masukkan tinggi tiang (meter):</label>
+        <input type="number" id="inputTinggiTiang" name="inputTinggiTiang" oninput="togglePlaceholder('inputTinggiTiang')">
+        <span id="tinggiTiangPlaceholder" class="placeholder">Jika tidak ada, isi 0</span>
         <br>
         <label for="jumlahTiang">Jumlah Tiang:</label>
-        <input type="number" id="jumlahTiang" name="jumlahTiang" required>
+        <input type="number" id="jumlahTiang" name="jumlahTiang" oninput="togglePlaceholder('jumlahTiang')">
+        <span id="jumlahTiangPlaceholder" class="placeholder">Jika tidak ada, isi 0</span>
         <br>
         <!-- Tombol-tombol dikelompokkan dalam kontainer -->
      
@@ -159,7 +161,7 @@
      
      
        // Periksa apakah semua input telah diisi
-       if (!P || !L || !tinggiTiang || !jumlahTiang) {
+       if (!P || !L) {
          // Jika ada input yang kosong, tampilkan pesan peringatan
          alert("Harap isi semua input sebelum melakukan perhitungan.");
          return; // Jangan lanjutkan perhitungan jika ada input yang kosong
@@ -178,7 +180,7 @@
     var dynabolt = galvalum + (jumlahTiang * 4);
 
       var resultHTML =
-    "<p id='labelBajaringan'>Kebutuhan Bajaringan = " + totalBajaringan + " batang <button onclick='showImage(\"https://i.ibb.co/HrVdqrX/21-53-49-images.jpg\")'>Gambar</button></p>" +
+    "<p id='labelBajaringan'>Kebutuhan Bajaringan 0.75 0.75 = " + totalBajaringan + " batang <button onclick='showImage(\"https://i.ibb.co/HrVdqrX/21-53-49-images.jpg\")'>Gambar</button></p>" +
     "<p id='galvalum'>Kebutuhan Galvalum = " + galvalum + " lembar ( P" + Math.ceil(L) + "m Panjang menyesuaikan) <button onclick='showImage(\"https://i.ibb.co/S3zNP94/images-1.jpg\")'>Gambar</button></p>" +
     "<p id='bautSBR'>Kebutuhan Baut SBR 10x19 = " + bautSBR + " biji <button onclick='showImage(\"https://i.ibb.co/xF1t5pr/21-54-44-images.jpg\")'>Gambar</button></p>" +
     "<p id='roofing'>Kebutuhan Baut Roofing (5cm) = " + roofing + " biji <button onclick='showImage(\"https://i.ibb.co/sFyHygG/21-55-13-images.jpg\")'>Gambar</button></p>" +
@@ -208,13 +210,13 @@ function showDesign() {
   var L = parseFloat(document.getElementById('inputL').value);
   var tinggiTiang = parseFloat(document.getElementById('inputTinggiTiang').value);
   var jumlahTiang = parseFloat(document.getElementById('jumlahTiang').value);
+// Periksa apakah semua input telah diisi
+       if (!P || !L) {
+         // Jika ada input yang kosong, tampilkan pesan peringatan
+         alert("Harap isi semua input sebelum melakukan perhitungan.");
+         return; // Jangan lanjutkan perhitungan jika ada input yang kosong
+       }
 
-  // Periksa apakah semua input telah diisi
-  if (!P || !L || !tinggiTiang || !jumlahTiang) {
-    // Jika ada input yang kosong, tampilkan pesan peringatan
-    alert("Harap isi semua input sebelum melihat desain.");
-    return; // Jangan lanjutkan tampilkan desain jika ada input yang kosong
-  }
 
   var designUrl = "https://i.ibb.co/q5KJvWz/Screenshot-20240425-124729-3-D-Modeling-App.png";
   showImage(designUrl);
@@ -226,11 +228,12 @@ function checkPrice() {
   var jumlahTiang = parseFloat(document.getElementById('jumlahTiang').value);
 
   // Periksa apakah semua input telah diisi
-  if (!P || !L || !tinggiTiang || !jumlahTiang) {
-    // Jika ada input yang kosong, tampilkan pesan peringatan
-    alert("Harap isi semua input sebelum melakukan perhitungan.");
-    return; // Jangan lanjutkan perhitungan jika ada input yang kosong
-  }
+       if (!P || !L) {
+         // Jika ada input yang kosong, tampilkan pesan peringatan
+         alert("Harap isi semua input sebelum melakukan perhitungan.");
+         return; // Jangan lanjutkan perhitungan jika ada input yang kosong
+       }
+
 
    var luasLantai = (P + 1) * L;
    var panjangDinding = (L + 1) * P;
@@ -243,12 +246,12 @@ function checkPrice() {
    var roofing = ((P * 2) + 1) * (L + 1) + (jumlahTiang * 4);
    var dynabolt = galvalum + (jumlahTiang * 4);
 
-  var hargabajaringan = totalBajaringan * 100000;
+  var hargabajaringan = totalBajaringan * 110000;
   var hargagalvalum = (galvalum * L) * 30000;
   var hargasbr = bautSBR * 250;
   var hargaroofing = roofing * 300;
   var hargadynabolt = dynabolt * 1500;
-  var jasa = ((P * L ) * 11500) + (( P * L ) * 6500) + 200000;
+  var jasa = ((P * L ) * 12000) + (( P * L ) * 7000) + 200000;
 
   // Hitung total harga
   var totalHarga = hargabajaringan + hargagalvalum + hargasbr + hargaroofing + hargadynabolt + jasa;
