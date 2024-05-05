@@ -5,6 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kalkulator Perhitungan</title>
     <link rel="stylesheet" href="styles.css">
+
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+        (function(){
+            var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+            s1.async=true;
+            s1.src='https://embed.tawk.to/6636115a07f59932ab3bf7fa/1ht1j7j1j';
+            s1.charset='UTF-8';
+            s1.setAttribute('crossorigin','*');
+            s0.parentNode.insertBefore(s1,s0);
+        })();
+    </script>
+    <!--End of Tawk.to Script-->
 </head>
 <style>
         /* CSS untuk body */
@@ -242,7 +256,7 @@ function checkPrice() {
   
    var totalBajaringan = Math.ceil(total / 6);
    var galvalum = Math.ceil(P / 0.75);
-   var bautSBR = ((P + 1) * (L + 1) * 4) + (jumlahTiang * 8);
+   var bautSBR = ((P + 1) * (L + 1) * 4) + (jumlahTiang * 16);
    var roofing = ((P * 2) + 1) * (L + 1) + (jumlahTiang * 4);
    var dynabolt = galvalum + (jumlahTiang * 4);
 
@@ -251,7 +265,7 @@ function checkPrice() {
   var hargasbr = bautSBR * 250;
   var hargaroofing = roofing * 300;
   var hargadynabolt = dynabolt * 1500;
-  var jasa = ((P * L ) * 12000) + (( P * L ) * 8000) + 200000;
+  var jasa = ((P * L ) * 12000) + (( P * L ) * 7000) + 200000;
 
   // Hitung total harga
   var totalHarga = hargabajaringan + hargagalvalum + hargasbr + hargaroofing + hargadynabolt + jasa;
