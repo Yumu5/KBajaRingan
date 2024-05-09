@@ -185,11 +185,12 @@
     var luasLantai = (P + 1) * L;
     var panjangDinding = (L + 1) * P;
     var hasilTiang = (tinggiTiang * 2) * jumlahTiang;
-    var total = luasLantai + panjangDinding + hasilTiang;
+    var sekat = (((tinggiTiang / 1) + 1) * 0.10 ) * jumlahTiang;
+    var total = luasLantai + panjangDinding + hasilTiang + sekat;
 
     var totalBajaringan = Math.ceil(total / 6);
     var galvalum = Math.ceil(P / 0.75);
-    var bautSBR = ((P + 1) * (L + 1) * 4) + (jumlahTiang * 8);
+    var bautSBR = ((P + 1) * (L + 1) * 4) + (jumlahTiang * 16);
     var roofing = ((P * 2)+ 1) * ( L + 1 ) + (jumlahTiang * 4);
     var dynabolt = galvalum + (jumlahTiang * 4);
 
