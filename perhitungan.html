@@ -132,6 +132,8 @@
         <label for="inputL">Masukkan lebar (meter):</label>
         <input type="number" id="inputL" name="inputL" required>
         <br>
+        
+        
        <label for="inputTinggiTiang">Masukkan tinggi tiang (meter):</label>
         <input type="number" id="inputTinggiTiang" name="inputTinggiTiang" oninput="togglePlaceholder('inputTinggiTiang')">
         <span id="tinggiTiangPlaceholder" class="placeholder">Jika tidak ada, isi 0</span>
@@ -139,6 +141,17 @@
         <label for="jumlahTiang">Jumlah Tiang:</label>
         <input type="number" id="jumlahTiang" name="jumlahTiang" oninput="togglePlaceholder('jumlahTiang')">
         <span id="jumlahTiangPlaceholder" class="placeholder">Jika tidak ada, isi 0</span>
+        <br>
+        
+        
+        
+        <label for="setengahTinggiTiang">Masukkan setengah tinggi tiang (meter):</label>
+        <input type="number" id="setengahTinggiTiang" name="setengahTinggiTiang" oninput="togglePlaceholder('setengahTinggiTiang')">
+        <span id="setengahTinggiTiangPlaceholder" class="placeholder">Jika tidak ada, isi 0</span>
+        <br>
+        <label for="jumlahSetengahTiang">Jumlah setengah tiang:</label>
+        <input type="number" id="jumlahSetengahTiang" name="jumlahSetengahTiang" oninput="togglePlaceholder('jumlahSetengahTiang')">
+        <span id="jumlahSetengahTiangPlaceholder" class="placeholder">Jika tidak ada, isi 0</span>
         <br>
         <!-- Tombol-tombol dikelompokkan dalam kontainer -->
      
@@ -172,6 +185,8 @@
     var L = parseFloat(document.getElementById('inputL').value);
     var tinggiTiang = parseFloat(document.getElementById('inputTinggiTiang').value);
     var jumlahTiang = parseFloat(document.getElementById('jumlahTiang').value);
+    var setengahTinggiTiang = parseFloat(document.getElementById('setengahTinggiTiang').value);
+    var jumlahSetengahTiang = parseFloat(document.getElementById('jumlahSetengahTiang').value);
      
      
        // Periksa apakah semua input telah diisi
@@ -186,19 +201,21 @@
     var panjangDinding = (L + 1) * P;
     var hasilTiang = (tinggiTiang * 2) * jumlahTiang;
     var sekat = (((tinggiTiang / 1) + 1) * 0.10 ) * jumlahTiang;
-    var total = luasLantai + panjangDinding + hasilTiang + sekat;
+    var sekat2 = (((setengahTinggiTiang / 1) + 1) * 0.10 ) * jumlahSetengahTiang;
+    var setengah = ( setengahTinggiTiang * 2) * jumlahSetengahTiang;
+    var total = luasLantai + panjangDinding + hasilTiang + sekat+ sekat2 + setengah ;
 
     var totalBajaringan = Math.ceil(total / 6);
     var galvalum = Math.ceil(P / 0.75);
-    var bautSBR = ((P + 1) * (L + 1) * 4) + (jumlahTiang * 16);
-    var roofing = ((P * 2)+ 1) * ( L + 1 ) + (jumlahTiang * 4);
-    var dynabolt = galvalum + (jumlahTiang * 4);
+    var bautSBR = ((P + 1) * (L + 1) * 4) + ((((tinggiTiang / 1) + 1) * jumlahTiang ) * 4) + ((((setengahTinggiTiang / 1 ) + 1) * jumlahSetengahTiang) * 4);
+    var roofing = ((P * 2)+ 1) * ( L + 1 ) + (jumlahTiang * 4) + (jumlahSetengahTiang * 4);
+    var dynabolt = (P / 0.75) + (jumlahTiang * 4) + ( jumlahSetengahTiang * 4);
 
       var resultHTML =
     "<p id='labelBajaringan'>Kebutuhan Bajaringan 0.75 0.75 = " + totalBajaringan + " batang <button onclick='showImage(\"https://i.ibb.co/HrVdqrX/21-53-49-images.jpg\")'>Gambar</button></p>" +
     "<p id='galvalum'>Kebutuhan Galvalum = " + galvalum + " lembar ( P" + Math.ceil(L) + "m Panjang menyesuaikan) <button onclick='showImage(\"https://i.ibb.co/S3zNP94/images-1.jpg\")'>Gambar</button></p>" +
-    "<p id='bautSBR'>Kebutuhan Baut SBR 10x19 = " + bautSBR + " biji <button onclick='showImage(\"https://i.ibb.co/xF1t5pr/21-54-44-images.jpg\")'>Gambar</button></p>" +
-    "<p id='roofing'>Kebutuhan Baut Roofing (5cm) = " + roofing + " biji <button onclick='showImage(\"https://i.ibb.co/sFyHygG/21-55-13-images.jpg\")'>Gambar</button></p>" +
+    "<p id='bautSBR'>Kebutuhan Baut SBR 10x19 (200)= " + bautSBR + " biji <button onclick='showImage(\"https://i.ibb.co/xF1t5pr/21-54-44-images.jpg\")'>Gambar</button></p>" +
+    "<p id='roofing'>Kebutuhan Baut Roofing (5cm) (100)= " + roofing + " biji <button onclick='showImage(\"https://i.ibb.co/sFyHygG/21-55-13-images.jpg\")'>Gambar</button></p>" +
     "<p id='dynabolt'>Kebutuhan Dynabolt 10x50 = " + dynabolt + " biji <button onclick='showImage(\"https://i.ibb.co/P6zC1T7/2024-04-24-21-55-42-2846556793032350212.jpg\")'>Gambar</button></p>";
 
   document.getElementById('result').innerHTML = resultHTML;
@@ -238,35 +255,40 @@ function showDesign() {
 }
 function checkPrice() {
   var P = parseFloat(document.getElementById('inputP').value);
-  var L = parseFloat(document.getElementById('inputL').value);
-  var tinggiTiang = parseFloat(document.getElementById('inputTinggiTiang').value);
-  var jumlahTiang = parseFloat(document.getElementById('jumlahTiang').value);
-
+    var L = parseFloat(document.getElementById('inputL').value);
+    var tinggiTiang = parseFloat(document.getElementById('inputTinggiTiang').value);
+    var jumlahTiang = parseFloat(document.getElementById('jumlahTiang').value);
+    var setengahTinggiTiang = parseFloat(document.getElementById('setengahTinggiTiang').value);
+    var jumlahSetengahTiang = parseFloat(document.getElementById('jumlahSetengahTiang').value);
+     
   // Periksa apakah semua input telah diisi
-       if (!P || !L) {
-         // Jika ada input yang kosong, tampilkan pesan peringatan
-         alert("Harap isi semua input sebelum melakukan perhitungan.");
-         return; // Jangan lanjutkan perhitungan jika ada input yang kosong
-       }
+  if (!P || !L) {
+    // Jika ada input yang kosong, tampilkan pesan peringatan
+    alert("Harap isi semua input sebelum melakukan perhitungan.");
+    return; // Jangan lanjutkan perhitungan jika ada input yang kosong
+  }
 
 
-   var luasLantai = (P + 1) * L;
-   var panjangDinding = (L + 1) * P;
-   var hasilTiang = (tinggiTiang * 2) * jumlahTiang;
-   var total = luasLantai + panjangDinding + hasilTiang;
-  
-   var totalBajaringan = Math.ceil(total / 6);
-   var galvalum = Math.ceil(P / 0.75);
-   var bautSBR = ((P + 1) * (L + 1) * 4) + (jumlahTiang * 16);
-   var roofing = ((P * 2) + 1) * (L + 1) + (jumlahTiang * 4);
-   var dynabolt = galvalum + (jumlahTiang * 4);
+  var luasLantai = (P + 1) * L;
+    var panjangDinding = (L + 1) * P;
+    var hasilTiang = (tinggiTiang * 2) * jumlahTiang;
+    var sekat = (((tinggiTiang / 1) + 1) * 0.10 ) * jumlahTiang;
+    var sekat2 = (((setengahTinggiTiang / 1) + 1) * 0.10 ) * jumlahSetengahTiang;
+    var setengah = ( setengahTinggiTiang * 2) * jumlahSetengahTiang;
+    var total = luasLantai + panjangDinding + hasilTiang + sekat+ sekat2 + setengah ;
+
+  var totalBajaringan = Math.ceil(total / 6);
+  var galvalum = Math.ceil(P / 0.75);
+  var bautSBR = ((P + 1) * (L + 1) * 4) + ((((tinggiTiang / 1) + 1) * jumlahTiang) * 4) + ((((setengahTinggiTiang / 1) + 1) * jumlahSetengahTiang) * 4);
+  var roofing = ((P * 2) + 1) * (L + 1) + (jumlahTiang * 4) + (jumlahSetengahTiang * 4);
+  var dynabolt = (P / 0.75) + (jumlahTiang * 4) + (jumlahSetengahTiang * 4);
 
   var hargabajaringan = totalBajaringan * 110000;
   var hargagalvalum = (galvalum * L) * 30000;
-  var hargasbr = bautSBR * 250;
-  var hargaroofing = roofing * 300;
-  var hargadynabolt = dynabolt * 1500;
-  var jasa = ((P * L ) * 12000) + (( P * L ) * 7000) + 200000;
+  var hargasbr = bautSBR * 250; // Harga per baut SBR
+  var hargaroofing = roofing * 750; // Harga per baut Roofing
+  var hargadynabolt = dynabolt * 2000;
+  var jasa = ((P * L) * 12000) + ((P * L) * 7000) + 200000;
 
   // Hitung total harga
   var totalHarga = hargabajaringan + hargagalvalum + hargasbr + hargaroofing + hargadynabolt + jasa;
@@ -282,6 +304,7 @@ function checkPrice() {
   document.getElementById('result').innerHTML = resultHTML;
   showPopupResult(); // Menampilkan popup hasil perhitungan
 }
+
 function showImage(imageUrl) {
     var popupImg = document.getElementById('popupImg');
     popupImg.src = imageUrl;
