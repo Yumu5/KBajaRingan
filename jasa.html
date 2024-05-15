@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inputan Panjang dan Reng</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<style>
+  /* style.css */
+  
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f4;
+  }
+  
+  form {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin: auto;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+  }
+  
+  input[type="number"] {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  button {
+    background: #007BFF;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  button:hover {
+    background: #0056b3;
+  }
+  
+  div#luasResult,
+  div#bajaringan,
+  div#rengResult,
+  div#galvalumResult {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  div#luasResult {
+    color: #007BFF;
+  }
+  
+  div#bajaringan {
+    color: #28a745;
+  }
+  
+  div#rengResult {
+    color: #ffc107;
+  }
+  
+  div#galvalumResult {
+    color: #17a2b8;
+  }
+</style>
+<body>
+    <form id="myForm">
+        <label for="panjangM">Panjang M:</label>
+        <input type="number" id="panjangM" name="panjangM"><br><br>
+
+        <label for="reng">Reng:</label>
+        <input type="number" id="reng" name="reng"><br><br>
+        
+        <label for="galvalum">Galvalum:</label>
+        <input type="number" id="galvalum" name="galvalum"><br><br>
+        
+        <label for="lebar">Lebar:</label>
+        <input type="number" id="lebar" name="lebar"><br><br>
+        
+        <label for="panjang">Panjang:</label>
+        <input type="number" id="panjang" name="panjang"><br><br>
+        
+        <label for="scrupsbr">Scrup sbr:</label>
+        <input type="number" id="scrupsbr" name="scrupsbr"><br><br>
+        
+        <label for="scruproofing">Scrup rofing:</label>
+        <input type="number" id="scruproofing" name="scruproofing"><br><br>
+        
+        <label for="dynabolt">Dynabolt:</label>
+        <input type="number" id="dynabolt" name="dynabolt"><br><br>
+              
+        <button type="button" onclick="hitung()">Hitung</button>
+    </form>
+    <div id="luasResult"></div>
+    <div id="bajaringan"></div>
+    <div id="rengResult"></div>
+    <div id="galvalumResult"></div>
+
+    <script>
+        document.getElementById("myForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            hitung(); // Panggil fungsi hitung saat form di-submit
+        });
+        
+        document.getElementById("panjangM").addEventListener("input", calculateBajaringan);
+        document.getElementById("reng").addEventListener("input", calculateReng);
+
+        function calculateBajaringan() {
+            var panjang = parseFloat(document.getElementById("panjangM").value);
+            var bajaringan = Math.ceil(panjang / 6);
+            document.getElementById("bajaringan").innerHTML = "Bajaringan: " + bajaringan + " batang";
+        }
+
+        function calculateReng() {
+            var reng = parseFloat(document.getElementById("reng").value);
+            var rengCount = Math.ceil(reng / 6);
+            document.getElementById("rengResult").innerHTML = "Reng: " + rengCount + " batang";
+        }
+        
+        document.getElementById("panjang").addEventListener("input", calculateLuas);
+        document.getElementById("lebar").addEventListener("input", calculateLuas);
+        
+        function calculateLuas() {
+            var panjang = parseFloat(document.getElementById("panjang").value);
+            var lebar = parseFloat(document.getElementById("lebar").value);
+            var luas = panjang * lebar;
+            document.getElementById("luasResult").innerHTML = "Luas: " + luas.toLocaleString() + " m²";
+        }
+        
+        document.getElementById("galvalum").addEventListener("input", updateGalvalum);
+        document.getElementById("lebar").addEventListener("input", updateGalvalum);
+        
+        function updateGalvalum() {
+            var galvalumValue = parseFloat(document.getElementById("galvalum").value);
+            var lebar = parseFloat(document.getElementById("lebar").value);
+            document.getElementById("galvalumResult").innerHTML = "Galvalum: " + galvalumValue.toLocaleString() + " buah P" + lebar + " meter";
+        }
+
+        function hitung() {
+            var skrupSbr = parseFloat(document.getElementById("scrupsbr").value) || 0;
+            var skrupRoofing = parseFloat(document.getElementById("scruproofing").value) || 0;
+            var dynabolt = parseFloat(document.getElementById("dynabolt").value) || 0;
+            var galvalum = parseFloat(document.getElementById("galvalum").value) || 0;
+            var lebar = parseFloat(document.getElementById("lebar").value) || 0;
+            var reng = parseFloat(document.getElementById("reng").value) || 0;
+            var bajaringan = parseFloat(document.getElementById("bajaringan").innerText.split(" ")[1]) || 0; // Ambil nilai bajaringan dari teks
+            var luas = parseFloat(document.getElementById("luasResult").innerText.split(" ")[1]) || 0; // Ambil nilai luas dari teks
+
+            // Periksa jika ada kolom yang kosong
+            if (isNaN(skrupSbr) || isNaN(skrupRoofing) || isNaN(dynabolt) || isNaN(galvalum) || isNaN(lebar) || isNaN(reng) || isNaN(bajaringan) || isNaN(luas)) {
+                alert("Silakan isi semua kolom yang diperlukan.");
+                return;
+            }
+
+            var hargaSkrupSbr = skrupSbr * 250;
+            var hargaSkrupRoofing = skrupRoofing * 750;
+            var hargaDynabolt = dynabolt * 2000;
+            var hargaGalvalum = galvalum * 30000 * lebar;
+            var hargaReng = reng * 30000;
+            var hargaBajaringan = bajaringan * 110000;
+            var hargaJasa = luas * 19000 + 200000;
+
+            var totalHarga = hargaSkrupSbr + hargaSkrupRoofing + hargaDynabolt + hargaGalvalum + hargaReng + hargaBajaringan + hargaJasa;
+
+            // Buka halaman popup
+            var popupWindow = window.open("", "_blank", "width=400,height=400,top=100,left=100");
+
+            // Susun HTML untuk ditampilkan di popup
+            var popupContent = "<html><head><title>Total Harga</title><style>";
+            popupContent += "body { text-align: center; font-size: 24px; margin-top: 50px; font-family: Arial, sans-serif; }";
+            popupContent += "button { margin-top: 20px; padding: 10px 20px; background: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer; }";
+            popupContent += "button:hover { background: #0056b3; }";
+            popupContent += ".close-button { position: absolute; top: 10px; right: 10px; background: #ff5c5c; color: white; border: none; border-radius: 50%; width: 30px; height: 30px; font-size: 20px; line-height: 30px; text-align: center; cursor: pointer; }";
+            popupContent += ".close-button:hover { background: #ff1a1a; }";
+            popupContent += "</style></head><body>";
+            popupContent += "<button class='close-button' onclick='window.close()'>×</button>";
+            popupContent += "<h1>Total Harga:</h1>";
+            popupContent += "<h2>" + totalHarga.toLocaleString() + "</h2>";
+            popupContent += "<button onclick='window.close()'>Close</button>";
+            popupContent += "</body></html>";
+
+            // Tulis HTML ke halaman popup
+            popupWindow.document.open();
+            popupWindow.document.write(popupContent);
+            popupWindow.document.close();
+        }
+    </script>
+</body>
+</html>
