@@ -160,7 +160,7 @@
             <button type="button" onclick="calculate()">Hitung</button>
             <button type="button" onclick="showDesign()">Desain</button>
             <button type="button" onclick="checkPrice()">Cek Harga</button>
-           <button onclick="manualCalculation()">Hitung Manual</button>
+           <button onclick="manualCalculation()">Hitung Manual ( Jasa)</button>
       
     </form>
     
@@ -219,9 +219,9 @@
       var resultHTML =
     "<p id='labelBajaringan'>Kebutuhan Bajaringan 0.75 0.75 = " + totalBajaringan + " batang <button onclick='showImage(\"https://i.ibb.co/HrVdqrX/21-53-49-images.jpg\")'>Gambar</button></p>" +
     "<p id='galvalum'>Kebutuhan Galvalum = " + galvalum + " lembar ( P" + Math.ceil(L) + "m Panjang menyesuaikan) <button onclick='showImage(\"https://i.ibb.co/S3zNP94/images-1.jpg\")'>Gambar</button></p>" +
-    "<p id='bautSBR'>Kebutuhan Baut SBR 10x19 (200)= " + bautSBR + " biji <button onclick='showImage(\"https://i.ibb.co/xF1t5pr/21-54-44-images.jpg\")'>Gambar</button></p>" +
+    "<p id='bautSBR'>Kebutuhan Baut SBR (200)= " + bautSBR + " biji <button onclick='showImage(\"https://i.ibb.co/xF1t5pr/21-54-44-images.jpg\")'>Gambar</button></p>" +
     "<p id='roofing'>Kebutuhan Baut Roofing (5cm) (100)= " + roofing + " biji <button onclick='showImage(\"https://i.ibb.co/sFyHygG/21-55-13-images.jpg\")'>Gambar</button></p>" +
-    "<p id='dynabolt'>Kebutuhan Dynabolt 10x50 = " + dynabolt + " biji <button onclick='showImage(\"https://i.ibb.co/P6zC1T7/2024-04-24-21-55-42-2846556793032350212.jpg\")'>Gambar</button></p>";
+    "<p id='dynabolt'>Kebutuhan Dynabolt = " + dynabolt + " biji <button onclick='showImage(\"https://i.ibb.co/P6zC1T7/2024-04-24-21-55-42-2846556793032350212.jpg\")'>Gambar</button></p>";
 
   document.getElementById('result').innerHTML = resultHTML;
   showPopup(); // Menampilkan popup
@@ -290,7 +290,7 @@ function checkPrice() {
 
   var hargabajaringan = totalBajaringan * 110000;
   var hargagalvalum = (galvalum * L) * 30000;
-  var hargasbr = bautSBR * 250; // Harga per baut SBR
+  var hargasbr = bautSBR * 300; // Harga per baut SBR
   var hargaroofing = roofing * 750; // Harga per baut Roofing
   var hargadynabolt = dynabolt * 2000;
   var jasa = ((P * L) * 12000) + ((P * L) * 7000) + 200000;
@@ -300,9 +300,9 @@ function checkPrice() {
 
   // Tampilkan hasil harga
   var resultHTML =
-    "<p>Harga Dapat Berubah Sewaktu Waktu dan Belum Termasuk ongkos kirim</p>" +
+    "<p>Harga Dapat Berubah Sewaktu Waktu dan Belum Termasuk ongkos kirim , Estimasi Harga</p>" +
     "<hr>" +
-    "<p>Total Harga Termasuk Jasa Pasang: Rp " + totalHarga.toLocaleString() + "</p>" + "<hr>" + "<p> Desain Yang Digunakan Desain Yang Umum dan Standart Seperti Pada Tombol Desain </p>" +
+    "<p>Total Harga Sudah Termasuk Jasa Pasang: Rp " + totalHarga.toLocaleString() + "</p>" + "<hr>" + "<p> Desain Yang Digunakan Desain Yang Umum dan Standart Seperti Pada Tombol Desain </p>" +
     "<button onclick='redirectToForm()'>Hubungi Kami</button>"; // Tombol Hubungi Kami
 
   // Tampilkan hasil harga dalam popup
